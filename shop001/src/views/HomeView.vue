@@ -1,5 +1,5 @@
 <template>
-  <Search></Search>
+  <SearchTop></SearchTop>
   <Swiper></Swiper>
   <ShopClass></ShopClass>
   <ShopHot></ShopHot>
@@ -8,7 +8,7 @@
 
 <script>
 
-import Search from '@/components/Home/Search.vue'
+import SearchTop from '@/components/Home/SearchTop.vue'
 import ShopClass from '@/components/Home/ShopClass.vue'
 import ShopHot from '@/components/Home/ShopHot.vue'
 import Swiper from '@/components/Home/Swiper.vue'
@@ -16,7 +16,7 @@ import Swiper from '@/components/Home/Swiper.vue'
 export default {
   name: 'HomeView',
   components: {
-    Search,ShopClass,ShopHot,Swiper
+    SearchTop,ShopClass,ShopHot,Swiper
   }
 }
 </script>

@@ -65,7 +65,7 @@
                 font-weight: 900;
                 width:1%;
                 height: 40%;
-                background: #08acee;
+                background: #aa6be4;
             }
         }
         .Slist{
