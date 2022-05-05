@@ -6,7 +6,6 @@
 </template>
 
 <script>
-    import ShopDetail from "@/components/Detail/ShopDetail.vue";
     import goodsInform from "@/components/Detail/goodsInform.vue";
     import goodsNav from "@/components/Detail/goodsNav.vue";
     import goodsShow from "@/components/Detail/goodsShow.vue";
@@ -40,16 +39,16 @@
             onMounted(async ()=>{
                 //console.log(route)
                 let id=route.query.id
-                console.log(id)
+                // console.log(id)
                 let res=await getShopDetail(id);
-                console.log(res)
+                // console.log(res)
                 shops.detail=res.data
-                console.log(shops.detail.data.photo)
+                // console.log(shops.detail.data.photo)
             })
             return {shops}
         },
         components:{
-            ShopDetail,goodsNav,goodsShow,goodsInform
+            goodsNav,goodsShow,goodsInform
         },
 
     }

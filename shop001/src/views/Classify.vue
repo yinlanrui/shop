@@ -1,116 +1,44 @@
 <template>
     <SearchTop></SearchTop>
-    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-    <div class="classifytop">
-        <div class="classifytop-nav" >
-            <div
-                    class="navBtn"
-                    v-for="(item, index) in queryAllCategory.result"
-                    :key="index"
-                    @click="change(index)"
-                    :class="{'active': index == highLight}"
-            >
-                {{ item.name }}
-            </div>
-        </div>
-    </div>
-    <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-    <div class="classifybttom">
-        <div class="classifybttom-nav">
-            <div class="nav"
-                 v-for="(item, index) in queryCommodityByCateId.result"
-                 :key="index"
-            >
-                <img class="mav-img" :src="'http://47.95.13.193/myToiletries' + item.photo" alt="" />
-            </div>
-        </div>
-    </div>
+    <classifyTop :msg="value" ref="thisSon"></classifyTop>
+    <classifyButtom :msg="value" ref="isSon" ></classifyButtom>
 </template>
 
 <script>
-    import SearchTop from "@/components/Home/SearchTop";
-    import { getClassify } from "@/api/index";
-    import { getBann } from "@/api/index";
+    import SearchTop from "@/components/Home/SearchTop.vue";
+    import classifyTop from "@/components/Classify/classifyTop.vue";
+    import classifyButtom from "@/components/Classify/classifyButtom.vue";
+    import {useRoute} from 'vue-router'
+
 
     export default {
         name: "Classify",
-        components: {
-            SearchTop ,
-        },
         data() {
             return {
-                highLight:0,
-                id:1,
-                queryAllCategory: {
-                    result: [],
-                },
-                queryCommodityByCateId: {
-                    result: [],
-                },
-            };
+                value:'1',
+            }
         },
-        async created() {
-            let res = await getClassify();
-            console.log(res.data.data);
-            this.queryAllCategory.result = res.data.data;
+        props:['changeHighLight'],
+        components:{
+            classifyTop,classifyButtom,SearchTop
         },
-        async beforeUpdate() {
-            let res = await getBann(this.id);
-            // console.log(res.data.data);
-            this.queryCommodityByCateId.result = res.data.data;
-        },
-        methods: {
-            change(value) {
-                console.log(value+1);
-                this.id=value+1
-                this.highLight=value
+        methods:{
+            fatherMethod(int) {
+                // console.log(int);
+                this.value=int;
+                this.$refs.isSon.created(int);
             },
         },
-    };
+        mounted(){
+            const route = useRoute();
+            console.log(route.query.id)
+            //this.value=route.query.id
+            this.$refs.isSon.created(route.query.id)
+            this.$refs.thisSon.change(route.query.id-1)  
+        }
+    }
 </script>
 
-<style lang="less" scoped>
-    .classifytop {
-        width: 7.5rem;
-        height: 3rem;
-        background: white;
-        .classifytop-nav {
-            width: 7rem;
-            height: 100%;
-            margin: 0 auto;
-            .navBtn {
-                display: inline-block;
-                width: 1.75rem;
-                height: 33%;
-                text-align: center;
-                line-height: 1rem;
-            }
-            .active{
-                color: #8E79CE;
-                border-bottom: 0.03rem solid #8E79CE;
-            }
-        }
-    }
-    .classifybttom {
-        margin-top: 0.7rem;
-        width: 7.5rem;
-        height: 7rem;
-        .classifybttom-nav{
-            width: 7rem;
-            margin: 0 auto;
-            .nav{
-                display: inline-block;
-                margin-left: 0.1rem;
-                margin-bottom: 0.1rem;
-                width: 3.3rem;
-                height: 3.3rem;
-                line-height: 1rem;
-                border-radius: 0.1rem;
-                .mav-img{
-                    width: 3.3rem;
-                    height: 3.3rem;
-                }
-            }
-        }
-    }
+<style scoped>
+
 </style>

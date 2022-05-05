@@ -6,14 +6,14 @@
         </div>
         <div class="hotList">
             <div class="swiper-container" v-for="(item,i) in shops.shopsList" :key="i">
-                    <router-link :to="{path:'/detail',query:{id:item.id}}" class="router-link-active">
+                    <div @click="$router.push({path:'/detail',query:{id:item.id}})" class="router-link-active">
                         <img :src="shops.url+item.photo" alt="">
                         <div class="swiper-detail">
                             <div class="title">{{item.name}}</div>
-                            <div class="content">{{item.info}}</div>
-                            <div class="shopping">购买</div>
+                            <p>{{item.info}}</p>
+                            <span>购买</span>
                         </div>
-                    </router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,9 +34,9 @@
             });
             onMounted(async () => {
                 let res = await getHot()
-                console.log(res)
+                // console.log(res)
                 shops.shopsList = res.data.data
-                console.log(shops.shopsList)
+                //console.log(shops.shopsList)
             });
             onUpdated(() => {
 
@@ -82,6 +82,7 @@
                     .swiper-detail {
                         width: 70%;
                         text-decoration: none;
+                        background: whitesmoke;
                         .title{
                             overflow: hidden;
                             white-space: nowrap;
@@ -93,14 +94,21 @@
                             color: #000;
                             margin-bottom: 0.1rem;
                         }
-                        .content{
+                        p{
                             word-break: break-all;
                             word-wrap: break-word;
-                            font-size: 0.2rem;
+                            font-size: 0.1rem;
                             font-weight: 900;
+                            color: #a3a3a3;
                         }
-                        .shopping{
-                            font-size: 0.3rem;
+                        span{
+                            display: inline-block;
+                            width: 1rem;
+                            bottom: 0;
+                            text-align: center;
+                            background: #8e79ce;
+                            border-radius: 0.1rem;
+                            color: whitesmoke;
                         }
                     }
                 }

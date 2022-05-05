@@ -19,12 +19,14 @@ export function getSearch(keywords){
     return axios.get(`${baseUrl}/biz/queryCommodityByName?name=${keywords}`)
 }
 
-//获取商品类分类页面的接口
-export function getBann(cateld) {
+//获取通过分类查询所有的商品
+export function getAllClassify(cateld) {
+    //模板字符串
     return axios.get(`${baseUrl}/biz/queryCommodityByCateId?cateId=${cateld}`)
 }
 
 export function getClassify() {
+    //模板字符串
     return axios.get(`${baseUrl}/biz/queryAllCategory`)
 }
 
@@ -33,7 +35,7 @@ export default {
     getShopDetail,
     getHot,
     getSearch,
-    getBann,
+    getAllClassify,
     getClassify
 
 

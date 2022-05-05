@@ -7,10 +7,14 @@
         <div class="Slist">
             <div class="swiper-container" id="shopSwiper">
                 <div class="swiper-wrapper">
-                    <router-link :to="{path:'/detail',query:{id:item.id}}" class="swiper-slide" v-for="(item,i) in shops.shopsList" :key="i">
+                    <div  @click="$router.push({path:'/classify',query:{id:item.id}})"
+                                 class="swiper-slide"
+                                 v-for="(item,i) in shops.shopsList"
+                                 :key="i"
+                                >
                         <img :src="shops.url+item.icon" alt="">
-                        <div class="name">{{item.name}}</div>
-                    </router-link>
+                        <span>{{item.name}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,21 +26,26 @@
     import Swiper from 'swiper'
     import {reactive,onMounted,onUpdated} from 'vue';
     import {getClass} from "@/api";
+    import {mapMutations,mapState} from 'vuex'
+    import router from "@/router";
+    import {useRoute} from "vue-router";
 
 
     export default {
         name: "ShopClass",
         setup(){
+            const route = useRoute();
             let shops=reactive({
                 shopsList:[], //保存
                 url:"http://47.95.13.193/myToiletries",
 
             });
+
             onMounted(async()=>{
                 let res=await getClass()
-                console.log(res)
+                //console.log(res)
                 shops.shopsList=res.data.data
-                console.log(shops.shopsList)
+
 
             });
             onUpdated(()=>{
@@ -86,6 +95,13 @@
                         width: 100%;
                         font-size: 0.24rem;
                         line-height: 0.4rem;
+                    }
+                    span{
+                        text-align: center;
+                        background: #8e79ce;
+                        color: whitesmoke;
+                        border-radius: 0.2rem;
+                        display: inline-block;
                     }
                 }
             }

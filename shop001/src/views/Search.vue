@@ -35,12 +35,12 @@
             </div>
         </div>
         <!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
-        <div class="shangPin">
+        <div v-if="show" class="shangPin" >
             <div class="top">
                 <div class="text">商品列表</div>
             </div>
             <div class="shangPin-nav">
-                <div class="nav" v-for="(item, i) in result.list" :key="i">
+                <div class="nav" v-for="(item, i) in result.list" :key="i"  @click="$router.push({path:'/detail',query:{id:item.id}})">
                     <div class="nav-img">
                         <img :src="'http://47.95.13.193/myToiletries' + item.photo" alt="" />
                     </div>
@@ -51,6 +51,8 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div v-else id="point">
         </div>
     </div>
 </template>
@@ -63,6 +65,8 @@
         components: {},
         data() {
             return {
+                show:false,
+                searchKeywork:'',
                 result: {
                     list: [],
                 },
@@ -73,9 +77,19 @@
                 console.log("用户要搜索" + this.searchKeywork);
                 let res = await getSearch(this.searchKeywork);
                 console.log("下面输出的是搜索到的相关");
-                console.log(res.data.data);
+                // console.log(res.data.data);
                 let data = res.data.data;
-                this.result.list = data;
+                if(this.searchKeywork==''){
+                    this.show=false
+                    document.getElementById("point").innerHTML='请先输入内容'
+                }else if(data==null){
+                    this.show=false
+                    document.getElementById("point").innerHTML='搜索不到'
+                }
+                else{
+                    this.show=true
+                    this.result.list = data;
+                }
             },
         },
     };
